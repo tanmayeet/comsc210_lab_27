@@ -42,6 +42,7 @@ int main() {
     cout << endl;
     switch (choice) {
       case 1: {
+        // Adds a villager
         int friendshipLevel;
         string species, catchphrase;
         cout << "Friendship level: ";
@@ -58,6 +59,7 @@ int main() {
         break;
       }
       case 2: {
+        // Deletes a villager
         if (it != villagerData.end()) {
           villagerData.erase(name);
           cout << endl;
@@ -68,7 +70,7 @@ int main() {
         break;
       }
       case 3: {
-        // access the map using a range-based for loop
+        // Increases friendship level of a villager
         if (it != villagerData.end()) {
           get<0>(it->second) = min(10, get<0>(it->second) + 1);
           cout << name << "'s friendship increased.\n";
@@ -81,7 +83,7 @@ int main() {
       }
 
       case 4: {
-        // access the map using a range-based for loop
+        // Decreases friendship level of a villager
         if (it != villagerData.end()) {
           get<0>(it->second) = min(0, get<0>(it->second) - 1);
           cout << name << "'s friendship decreased.\n";
@@ -94,7 +96,7 @@ int main() {
       }
 
       case 5: {
-        // access the map using a range-based for loop
+        // Allows user to search a villager and outputs villagers' details
         if (it != villagerData.end()) {
           cout << name << " [" << get<0>(it->second) << ", "
                << get<1>(it->second) << ", " << get<2>(it->second) << "]\n";
