@@ -37,49 +37,45 @@ int main() {
     getline(cin, name);
 
     auto it = villagerData.find(name);
+
     switch (choice) {
       case 1: {
         // access the map using a range-based for loop
-        cout << "Villager details (range based for loop):" << endl;
-        for (auto pair : villagerData) {
-          cout << pair.first << " [" << get<0>(pair.second) << ", "
-               << get<1>(pair.second) << ", " << get<2>(pair.second) << "]\n";
-          cout << endl;
+        if (it != villagerData.end()) {
+          get<0>(it->second) = min(10, get<0>(it->second) + 1);
+          cout << name << "'s friendship increased.\n";
+        } else {
+          cout << name << " not found.\n";
         }
-      }
-      case 2: {
-        // access the map using iterators
-        cout << "\nVillager details (iterators):" << endl;
-        for (map<string, tuple<int, string, string>>::iterator it =
-                 villagerData.begin();
-             it != villagerData.end(); ++it) {
-          cout << it->first << " [" << get<0>(it->second) << ", "
-               << get<1>(it->second) << ", " << get<2>(it->second) << "]\n"
-               << endl;
-        }
-      }
-        // delete an element
-        villagerData.erase("Raymond");
-      case 3: {
-        // search for an element using .find() to avoid errors
-        string searchKey = "Audie";
-        auto it = villagerData.find(searchKey);
-        if (it !=
-            villagerData.end()) {  // the iterator points to beyond the end
-                                   // of the map if searchKey is not found
-          cout << "\nFound " << searchKey << "[" << it->first << " ["
-               << get<0>(it->second) << ", " << get<1>(it->second) << ", "
-               << get<2>(it->second) << "]\n"
-               << endl;
-        } else
-          cout << endl << searchKey << " not found." << endl;
+        break;
       }
 
-        // report size, clear, report size again to confirm map operations
-        cout << "\nSize before clear: " << villagerData.size() << endl;
-        villagerData.clear();
-        cout << "Size after clear: " << villagerData.size() << endl;
+      case 2: {
+        // access the map using a range-based for loop
+        if (it != villagerData.end()) {
+          get<0>(it->second) = min(10, get<0>(it->second) - 1);
+          cout << name << "'s friendship decreased.\n";
+        } else {
+          cout << name << " not found.\n";
+        }
+        break;
+      }
+
+      case 3: {
+        // access the map using a range-based for loop
+        if (it != villagerData.end()) {
+          cout << name << " [" << get<0>(it->second) << ", "
+               << get<1>(it->second) << ", " << get<2>(it->second) << "]\n";
+        } else {
+          cout << name << " not found.\n";
+        }
+        break;
+      }
     }
+    // report size, clear, report size again to confirm map operations
+    cout << "\nSize before clear: " << villagerData.size() << endl;
+    villagerData.clear();
+    cout << "Size after clear: " << villagerData.size() << endl;
   }
   return 0;
 }
