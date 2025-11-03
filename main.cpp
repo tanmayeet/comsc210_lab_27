@@ -13,8 +13,8 @@ int main() {
   // insert elements into the map
   // note how the right-hand side of the assignment are the vector elements
   villagerData["Audie"] = make_tuple(7, "Wolf", "Snap to It!");
-  villagerData["Raymond"] = make_tuple(10, "Alligator", "Hubba hubba!");
   villagerData["Drago"] = make_tuple(8, "Cat", "Nice fit!");
+  villagerData["Raymond"] = make_tuple(10, "Alligator", "Hubba hubba!");
 
   int choice;
   string name;
@@ -44,8 +44,10 @@ int main() {
         if (it != villagerData.end()) {
           get<0>(it->second) = min(10, get<0>(it->second) + 1);
           cout << name << "'s friendship increased.\n";
+          cout << endl;
         } else {
           cout << name << " not found.\n";
+          cout << endl;
         }
         break;
       }
@@ -55,8 +57,10 @@ int main() {
         if (it != villagerData.end()) {
           get<0>(it->second) = min(10, get<0>(it->second) - 1);
           cout << name << "'s friendship decreased.\n";
+          cout << endl;
         } else {
           cout << name << " not found.\n";
+          cout << endl;
         }
         break;
       }
@@ -66,16 +70,29 @@ int main() {
         if (it != villagerData.end()) {
           cout << name << " [" << get<0>(it->second) << ", "
                << get<1>(it->second) << ", " << get<2>(it->second) << "]\n";
+          cout << endl;
         } else {
           cout << name << " not found.\n";
+          cout << endl;
         }
         break;
       }
+      default:
+        cout << "Invalid choice.\n";
     }
+
+    // Print all villagers
+    cout << "Villager details:\n";
+    for (auto pair : villagerData) {
+      cout << pair.first << " [" << get<0>(pair.second) << ", "
+           << get<1>(pair.second) << ", " << get<2>(pair.second) << "]\n";
+    }
+    cout << endl;
+
     // report size, clear, report size again to confirm map operations
-    cout << "\nSize before clear: " << villagerData.size() << endl;
-    villagerData.clear();
-    cout << "Size after clear: " << villagerData.size() << endl;
+    // cout << "\nSize before clear: " << villagerData.size() << endl;
+    // villagerData.clear();
+    // cout << "Size after clear: " << villagerData.size() << endl;
   }
   return 0;
 }
