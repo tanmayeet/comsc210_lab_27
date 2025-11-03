@@ -21,14 +21,16 @@ int main() {
 
   while (true) {
     cout << "Menu: \n";
-    cout << "1. Increase Friendship \n";
-    cout << "2. Decrease Friendship \n";
-    cout << "3. Search for villager \n";
-    cout << "4. Exit \n";
+    cout << "1. Add Villager \n";
+    cout << "2. Delete Villager \n";
+    cout << "3. Increase Friendship \n";
+    cout << "4. Decrease Friendship \n";
+    cout << "5. Search for villager \n";
+    cout << "6. Exit \n";
     cout << "Enter choice: \n";
     cin >> choice;
 
-    if (choice == 4) {
+    if (choice == 6) {
       break;
     }
 
@@ -37,9 +39,35 @@ int main() {
     getline(cin, name);
 
     auto it = villagerData.find(name);
-
+    cout << endl;
     switch (choice) {
       case 1: {
+        int friendshipLevel;
+        string species, catchphrase;
+        cout << "Friendship level: ";
+        cin >> friendshipLevel;
+        cin.ignore();
+        cout << "Species: ";
+        getline(cin, species);
+        cout << "Catchphrase: ";
+        getline(cin, catchphrase);
+        cout << endl;
+        villagerData[name] = make_tuple(friendshipLevel, species, catchphrase);
+        cout << name << " added.\n";
+        cout << endl;
+        break;
+      }
+      case 2: {
+        if (it != villagerData.end()) {
+          villagerData.erase(name);
+          cout << endl;
+        } else {
+          cout << name << " not found.\n";
+          cout << endl;
+        }
+        break;
+      }
+      case 3: {
         // access the map using a range-based for loop
         if (it != villagerData.end()) {
           get<0>(it->second) = min(10, get<0>(it->second) + 1);
@@ -52,10 +80,10 @@ int main() {
         break;
       }
 
-      case 2: {
+      case 4: {
         // access the map using a range-based for loop
         if (it != villagerData.end()) {
-          get<0>(it->second) = min(10, get<0>(it->second) - 1);
+          get<0>(it->second) = min(0, get<0>(it->second) - 1);
           cout << name << "'s friendship decreased.\n";
           cout << endl;
         } else {
@@ -65,7 +93,7 @@ int main() {
         break;
       }
 
-      case 3: {
+      case 5: {
         // access the map using a range-based for loop
         if (it != villagerData.end()) {
           cout << name << " [" << get<0>(it->second) << ", "
