@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <tuple>
 #include <vector>
 using namespace std;
 
@@ -20,6 +21,8 @@ int main() {
 
   int choice;
   string name;
+  const int max_friendship = 10;
+  const int min_friendship = 0;
 
   while (true) {
     cout << "Menu: \n";
@@ -48,12 +51,14 @@ int main() {
         string species, catchphrase;
         cout << "Friendship level (0-10): ";
         cin >> friendshipLevel;
-        while (friendshipLevel < 0 || friendshipLevel > 10) {
+        while (friendshipLevel < min_friendship ||
+               friendshipLevel > max_friendship) {
           cout << "Invalid. Please enter a value between 0 and 10.\n";
           cout << "Friendship level (0-10): ";
           cin >> friendshipLevel;
         }
-        friendshipLevel = max(0, min(10, friendshipLevel));
+        friendshipLevel =
+            max(min_friendship, min(max_friendship, friendshipLevel));
         cin.ignore();
         cout << "Species: ";
         getline(cin, species);
@@ -78,7 +83,7 @@ int main() {
       case 3: {
         // Increases friendship level of a villager
         if (it != villagerData.end()) {
-          get<0>(it->second) = min(10, get<0>(it->second) + 1);
+          get<0>(it->second) = min(max_friendship, get<0>(it->second) + 1);
           cout << name << "'s friendship increased.\n";
           cout << endl;
         } else {
@@ -91,7 +96,7 @@ int main() {
       case 4: {
         // Decreases friendship level of a villager
         if (it != villagerData.end()) {
-          get<0>(it->second) = max(0, get<0>(it->second) - 1);
+          get<0>(it->second) = max(min_friendship, get<0>(it->second) - 1);
           cout << name << "'s friendship decreased.\n";
           cout << endl;
         } else {
