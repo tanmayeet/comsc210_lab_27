@@ -59,6 +59,7 @@
   "files.associations": {
     "tuple": "cpp",
     "iostream": "cpp",
-    "map": "cpp"
+    "map": "cpp",
+    "istream": "cpp"
   }
 }

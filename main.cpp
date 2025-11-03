@@ -12,6 +12,8 @@ int main() {
 
   // insert elements into the map
   // note how the right-hand side of the assignment are the vector elements
+
+  // Each villager is stored as a tuple: (friendshipLevel, species, catchphrase)
   villagerData["Audie"] = make_tuple(7, "Wolf", "Snap to It!");
   villagerData["Drago"] = make_tuple(8, "Cat", "Nice fit!");
   villagerData["Raymond"] = make_tuple(10, "Alligator", "Hubba hubba!");
@@ -27,7 +29,7 @@ int main() {
     cout << "4. Decrease Friendship \n";
     cout << "5. Search for villager \n";
     cout << "6. Exit \n";
-    cout << "Enter choice: \n";
+    cout << "Enter choice: ";
     cin >> choice;
 
     if (choice == 6) {
@@ -39,20 +41,24 @@ int main() {
     getline(cin, name);
 
     auto it = villagerData.find(name);
-    cout << endl;
     switch (choice) {
       case 1: {
         // Adds a villager
         int friendshipLevel;
         string species, catchphrase;
-        cout << "Friendship level: ";
+        cout << "Friendship level (0-10): ";
         cin >> friendshipLevel;
+        while (friendshipLevel < 0 || friendshipLevel > 10) {
+          cout << "Invalid. Please enter a value between 0 and 10.\n";
+          cout << "Friendship level (0-10): ";
+          cin >> friendshipLevel;
+        }
+        friendshipLevel = max(0, min(10, friendshipLevel));
         cin.ignore();
         cout << "Species: ";
         getline(cin, species);
         cout << "Catchphrase: ";
         getline(cin, catchphrase);
-        cout << endl;
         villagerData[name] = make_tuple(friendshipLevel, species, catchphrase);
         cout << name << " added.\n";
         cout << endl;
@@ -85,7 +91,7 @@ int main() {
       case 4: {
         // Decreases friendship level of a villager
         if (it != villagerData.end()) {
-          get<0>(it->second) = min(0, get<0>(it->second) - 1);
+          get<0>(it->second) = max(0, get<0>(it->second) - 1);
           cout << name << "'s friendship decreased.\n";
           cout << endl;
         } else {
